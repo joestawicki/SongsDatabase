@@ -1,0 +1,9 @@
+﻿TODO:
+Print
+Print Preview
+Options - query specific songs
+Administrator - backup database
+Custom Dialog box
+Fix Loading so it exits correctly
+Formatting - change font/color,etc. (someday??)
+Autosize coluns to fit content (someday???)

@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AllSongsDatabaseModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="AllSongsDatabaseModelStoreContainer">
+          <EntitySet Name="Artist" EntityType="AllSongsDatabaseModel.Store.Artist" store:Type="Tables" />
+          <EntitySet Name="Book" EntityType="AllSongsDatabaseModel.Store.Book" store:Type="Tables" />
+          <EntitySet Name="PianoSong" EntityType="AllSongsDatabaseModel.Store.PianoSong" store:Type="Tables" />
+          <EntitySet Name="Song" EntityType="AllSongsDatabaseModel.Store.Song" store:Type="Tables" />
+          <AssociationSet Name="FK_ArtistID" Association="AllSongsDatabaseModel.Store.FK_ArtistID">
+            <End Role="Artist" EntitySet="Artist" />
+            <End Role="PianoSong" EntitySet="PianoSong" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BookID" Association="AllSongsDatabaseModel.Store.FK_BookID">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="PianoSong" EntitySet="PianoSong" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SongID" Association="AllSongsDatabaseModel.Store.FK_SongID">
+            <End Role="Song" EntitySet="Song" />
+            <End Role="PianoSong" EntitySet="PianoSong" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Artist">
+          <Key>
+            <PropertyRef Name="ArtistID" />
+          </Key>
+          <Property Name="ArtistID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ArtistName" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="BookID" />
+          </Key>
+          <Property Name="BookID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BookName" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="PianoSong">
+          <Key>
+            <PropertyRef Name="SongID" />
+            <PropertyRef Name="ArtistID" />
+            <PropertyRef Name="BookID" />
+            <PropertyRef Name="PianoSongID" />
+          </Key>
+          <Property Name="SongID" Type="int" Nullable="false" />
+          <Property Name="ArtistID" Type="int" Nullable="false" />
+          <Property Name="BookID" Type="int" Nullable="false" />
+          <Property Name="PageNumber" Type="int" />
+          <Property Name="PianoSongID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Song">
+          <Key>
+            <PropertyRef Name="SongID" />
+          </Key>
+          <Property Name="SongID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SongName" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <Association Name="FK_ArtistID">
+          <End Role="Artist" Type="AllSongsDatabaseModel.Store.Artist" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PianoSong" Type="AllSongsDatabaseModel.Store.PianoSong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artist">
+              <PropertyRef Name="ArtistID" />
+            </Principal>
+            <Dependent Role="PianoSong">
+              <PropertyRef Name="ArtistID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BookID">
+          <End Role="Book" Type="AllSongsDatabaseModel.Store.Book" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PianoSong" Type="AllSongsDatabaseModel.Store.PianoSong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="BookID" />
+            </Principal>
+            <Dependent Role="PianoSong">
+              <PropertyRef Name="BookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SongID">
+          <End Role="Song" Type="AllSongsDatabaseModel.Store.Song" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PianoSong" Type="AllSongsDatabaseModel.Store.PianoSong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Song">
+              <PropertyRef Name="SongID" />
+            </Principal>
+            <Dependent Role="PianoSong">
+              <PropertyRef Name="SongID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AllSongsDatabaseModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="AllSongsDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Artists" EntityType="AllSongsDatabaseModel.Artist" />
+          <EntitySet Name="Books" EntityType="AllSongsDatabaseModel.Book" />
+          <EntitySet Name="PianoSongs" EntityType="AllSongsDatabaseModel.PianoSong" />
+          <EntitySet Name="Songs" EntityType="AllSongsDatabaseModel.Song" />
+          <AssociationSet Name="FK_ArtistID" Association="AllSongsDatabaseModel.FK_ArtistID">
+            <End Role="Artist" EntitySet="Artists" />
+            <End Role="PianoSong" EntitySet="PianoSongs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BookID" Association="AllSongsDatabaseModel.FK_BookID">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="PianoSong" EntitySet="PianoSongs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SongID" Association="AllSongsDatabaseModel.FK_SongID">
+            <End Role="Song" EntitySet="Songs" />
+            <End Role="PianoSong" EntitySet="PianoSongs" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Artist">
+          <Key>
+            <PropertyRef Name="ArtistID" />
+          </Key>
+          <Property Name="ArtistID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ArtistName" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="PianoSongs" Relationship="AllSongsDatabaseModel.FK_ArtistID" FromRole="Artist" ToRole="PianoSong" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="BookID" />
+          </Key>
+          <Property Name="BookID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookName" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="PianoSongs" Relationship="AllSongsDatabaseModel.FK_BookID" FromRole="Book" ToRole="PianoSong" />
+        </EntityType>
+        <EntityType Name="PianoSong">
+          <Key>
+            <PropertyRef Name="SongID" />
+            <PropertyRef Name="ArtistID" />
+            <PropertyRef Name="BookID" />
+            <PropertyRef Name="PianoSongID" />
+          </Key>
+          <Property Name="SongID" Type="Int32" Nullable="false" />
+          <Property Name="ArtistID" Type="Int32" Nullable="false" />
+          <Property Name="BookID" Type="Int32" Nullable="false" />
+          <Property Name="PageNumber" Type="Int32" />
+          <Property Name="PianoSongID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Artist" Relationship="AllSongsDatabaseModel.FK_ArtistID" FromRole="PianoSong" ToRole="Artist" />
+          <NavigationProperty Name="Book" Relationship="AllSongsDatabaseModel.FK_BookID" FromRole="PianoSong" ToRole="Book" />
+          <NavigationProperty Name="Song" Relationship="AllSongsDatabaseModel.FK_SongID" FromRole="PianoSong" ToRole="Song" />
+        </EntityType>
+        <EntityType Name="Song">
+          <Key>
+            <PropertyRef Name="SongID" />
+          </Key>
+          <Property Name="SongID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SongName" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="PianoSongs" Relationship="AllSongsDatabaseModel.FK_SongID" FromRole="Song" ToRole="PianoSong" />
+        </EntityType>
+        <Association Name="FK_ArtistID">
+          <End Role="Artist" Type="AllSongsDatabaseModel.Artist" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PianoSong" Type="AllSongsDatabaseModel.PianoSong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artist">
+              <PropertyRef Name="ArtistID" />
+            </Principal>
+            <Dependent Role="PianoSong">
+              <PropertyRef Name="ArtistID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BookID">
+          <End Role="Book" Type="AllSongsDatabaseModel.Book" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PianoSong" Type="AllSongsDatabaseModel.PianoSong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="BookID" />
+            </Principal>
+            <Dependent Role="PianoSong">
+              <PropertyRef Name="BookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SongID">
+          <End Role="Song" Type="AllSongsDatabaseModel.Song" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PianoSong" Type="AllSongsDatabaseModel.PianoSong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Song">
+              <PropertyRef Name="SongID" />
+            </Principal>
+            <Dependent Role="PianoSong">
+              <PropertyRef Name="SongID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AllSongsDatabaseModelStoreContainer" CdmEntityContainer="AllSongsDatabaseEntities">
+          <EntitySetMapping Name="Artists">
+            <EntityTypeMapping TypeName="AllSongsDatabaseModel.Artist">
+              <MappingFragment StoreEntitySet="Artist">
+                <ScalarProperty Name="ArtistID" ColumnName="ArtistID" />
+                <ScalarProperty Name="ArtistName" ColumnName="ArtistName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Books">
+            <EntityTypeMapping TypeName="AllSongsDatabaseModel.Book">
+              <MappingFragment StoreEntitySet="Book">
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+                <ScalarProperty Name="BookName" ColumnName="BookName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PianoSongs">
+            <EntityTypeMapping TypeName="AllSongsDatabaseModel.PianoSong">
+              <MappingFragment StoreEntitySet="PianoSong">
+                <ScalarProperty Name="SongID" ColumnName="SongID" />
+                <ScalarProperty Name="ArtistID" ColumnName="ArtistID" />
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+                <ScalarProperty Name="PageNumber" ColumnName="PageNumber" />
+                <ScalarProperty Name="PianoSongID" ColumnName="PianoSongID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Songs">
+            <EntityTypeMapping TypeName="AllSongsDatabaseModel.Song">
+              <MappingFragment StoreEntitySet="Song">
+                <ScalarProperty Name="SongID" ColumnName="SongID" />
+                <ScalarProperty Name="SongName" ColumnName="SongName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

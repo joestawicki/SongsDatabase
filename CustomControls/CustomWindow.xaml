@@ -1,0 +1,112 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    x:Class="PianoSongs.CustomWindow">
+    <Style x:Key="BlueWindow" TargetType="{x:Type Window}">
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="WindowStyle" Value="None" />
+        <Setter Property="AllowsTransparency" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <Grid x:Name="WindowRoot" MouseLeftButtonDown="Window_MouseLeftButtonDown" Width="{Binding Window.Height}" Height="{Binding Window.Width}" SizeChanged="WindowSizeChanged" MinHeight="{TemplateBinding Height}" MinWidth="{TemplateBinding Width}">
+                        <Grid.ContextMenu>
+                            <ContextMenu x:Name="windowCM">
+                                <MenuItem x:Name="MenuItemMinimize" Header="Minimize" ToolTip="Minimize the Window" Click="CMMinimizeClick">
+                                    <MenuItem.Icon>
+                                        <Image Height="Auto" Width="Auto" Source="/PianoSongs;component/Icons/minimize_square.ico"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem x:Name="MenuItemMaximize" Header="Maximize" ToolTip="Maximize the Window" Click="CMMaximizeClick">
+                                    <MenuItem.Icon>
+                                        <Image Height="Auto" Width="Auto" Source="/PianoSongs;component/Icons/maximize_square.ico"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem x:Name="MenuItemClose" Header="Close" ToolTip="Close the Window" Click="CMCloseClick">
+                                    <MenuItem.Icon>
+                                        <Image Height="Auto" Width="Auto" Source="/PianoSongs;component/Icons/close_square.ico"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </Grid.ContextMenu>
+                        <Rectangle x:Name="MainWindow" Stroke="#FF00026A" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="Gray"/>
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <Rectangle x:Name="TopBar" Fill="CornflowerBlue" RadiusY="12" Margin="0,11,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="29" PreviewMouseLeftButtonDown="Rect_DoubleClick"/>
+                        <TextBlock Text="{Binding Title,RelativeSource={RelativeSource TemplatedParent}}"  VerticalAlignment="Top" Margin="10,16,0,0" FontSize="14" FontWeight="Medium" PreviewMouseLeftButtonDown="Title_DoubleClick"/>
+                        <Canvas x:Name="RestoreButton" HorizontalAlignment="Right" Height="10" VerticalAlignment="Top" Width="8" Margin="0,19,35,0" Visibility="Collapsed" ToolTip="Restore Window" PreviewMouseDown="RestoreButton_PreviewMouseDown">
+                            <Rectangle Fill="#00000000" Height="8" Stroke="Black" Width="8" StrokeThickness="1.5" Canvas.Left="2" x:Name="RestoreOne"/>
+                            <Rectangle Fill="#00000000" Height="8" Stroke="Black" StrokeThickness="1.5" Width="8" Canvas.Top="3" Canvas.Left="-.5" x:Name="RestoreTwo"/>
+                        </Canvas>
+                        <TextBlock x:Name="CloseButton" HorizontalAlignment="Right" Margin="0,16,15,0" VerticalAlignment="Top" Width="11" Height="18" RenderTransformOrigin="10.029,-7.861" Text="X" TextWrapping="Wrap" FontWeight="Bold" FontFamily="Verdana" FontSize="14.667" PreviewMouseDown="textBlock_MouseDown" ToolTip="Close"/>
+                        <Rectangle x:Name="MaximizeButton" Margin="0,19,33,0" VerticalAlignment="Top" Height="12" Stroke="Black" StrokeThickness="2.25" HorizontalAlignment="Right" Width="12" Fill="#00000000" PreviewMouseDown="MaximizeButton_PreviewMouseDown" ToolTip="Maximize Window"/>
+                        <Path x:Name="MinimizeButton" Data="M270,119 L563,119" Fill="#00000000" Height="6.25" Margin="0,23.75,51.75,0" Stretch="Fill" Stroke="Black" StrokeThickness="3.5" VerticalAlignment="Top" HorizontalAlignment="Right" Width="18.25" PreviewMouseDown="MinimizeButton_PreviewMouseDown" ToolTip="Minimize Window" />
+                        <Thumb x:Name="TopThumb" Height="6" Margin="14,0" VerticalAlignment="Top" Cursor="SizeNS" DragDelta="Top_DragDelta" Opacity="0"/>
+                        <Thumb x:Name="BtmThumb" Height="6" Margin="14,0" VerticalAlignment="Bottom" Cursor="SizeNS" DragDelta="Btm_DragDelta" Opacity="0"/>
+                        <Thumb x:Name="RgtThumb" HorizontalAlignment="Right" Margin="0,14" Width="6" Cursor="SizeWE" DragDelta="Rgt_DragDelta" Opacity="0"/>
+                        <Thumb x:Name="LftThumb" HorizontalAlignment="Left" Margin="0,14" Width="6" Cursor="SizeWE" DragDelta="Lft_DragDelta" Opacity="0"/>
+                        <AdornerDecorator>
+                            <ContentPresenter/>
+                        </AdornerDecorator>
+                    </Grid>
+                    <ControlTemplate.Resources>
+                            <Storyboard x:Key="MouseEnter">
+                                <ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="CloseButton" Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)">
+                                    <SplineColorKeyFrame KeyTime="00:00:00.1000000" Value="#FF000BFF"/>
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
+                            <Storyboard x:Key="RectMouseEnter">
+                                <ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="MaximizeButton" Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)">
+                                    <SplineColorKeyFrame KeyTime="00:00:00.1000000" Value="#FF000BFF"/>
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
+                        <Storyboard x:Key="CanvasMouseEnter">
+                            <ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="RestoreTwo" Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)">
+                                <SplineColorKeyFrame KeyTime="00:00:00.1000000" Value="#FF000BFF"/>
+                            </ColorAnimationUsingKeyFrames>
+                            <ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="RestoreOne" Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)">
+                                <SplineColorKeyFrame KeyTime="00:00:00.1000000" Value="#FF000BFF"/>
+                            </ColorAnimationUsingKeyFrames>
+                        </Storyboard>                       
+                        <Storyboard x:Key="PathEnter">
+                                <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)" Storyboard.TargetName="MinimizeButton">
+                                    <EasingColorKeyFrame KeyTime="0:0:0.1" Value="#FF000BFF"/>
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
+                    </ControlTemplate.Resources>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="CloseButton">
+                            <BeginStoryboard x:Name="BeginMouseEnterStoryboard" Storyboard="{StaticResource MouseEnter}"/>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="CloseButton">
+                            <StopStoryboard BeginStoryboardName="BeginMouseEnterStoryboard"/>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="MaximizeButton">
+                            <BeginStoryboard x:Name="BeginMaxMouseEnterStoryboard" Storyboard="{StaticResource RectMouseEnter}"/>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="MaximizeButton">
+                            <StopStoryboard BeginStoryboardName="BeginMaxMouseEnterStoryboard"/>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="RestoreButton">
+                            <BeginStoryboard x:Name="BeginRestoreStoryboard" Storyboard="{StaticResource CanvasMouseEnter}"/>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="RestoreButton">
+                            <StopStoryboard BeginStoryboardName="BeginRestoreStoryboard"/>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="MinimizeButton">
+                            <BeginStoryboard x:Name="BeginMinMouseEnterStoryboard" Storyboard="{StaticResource PathEnter}"/>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="MinimizeButton">
+                            <StopStoryboard BeginStoryboardName="BeginMinMouseEnterStoryboard"/>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
+    
+    

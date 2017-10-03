@@ -1,0 +1,44 @@
+﻿<Window x:Class="PianoSongs.AddSongs"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:WPFAutoCompleteTextbox"
+        Title="Add Your Songs:" Height="375" Width="600" Icon="/PianoSongs;component/Icons/piano.ico"
+        Style="{StaticResource BlueWindow}" MinHeight="375" MinWidth="600">
+    <Window.Resources>
+        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
+    </Window.Resources>
+    <Grid>     
+        <Label Content="Song(s):" Margin="13,50,0,0" Name="lblSong" HorizontalAlignment="Left" Width="52" Height="26" VerticalAlignment="Top" />
+        <Label Content="Artist:" HorizontalAlignment="Left" Margin="12,0,0,120" Name="lblArtist" Width="Auto" Height="26" VerticalAlignment="Bottom" />
+        <TextBox ScrollViewer.VerticalScrollBarVisibility="Auto" Foreground="Black" Margin="71,50,15,169" 
+                 Name="tbSongs" TextWrapping="WrapWithOverflow" AcceptsReturn="True">
+            <TextBox.Resources>
+                <VisualBrush x:Key="HelpBrush" TileMode="None" Stretch="None" AlignmentX="Left" AlignmentY="Top" AutoLayoutContent="True">
+                    <VisualBrush.Visual>
+                        <TextBlock Text=" Enter songs here, one per line followed by ~ and the page number (optional)" Foreground="Gray" 
+                                   Width="{Binding ElementName=tbSongs, Path=ActualWidth}" Height="{Binding ElementName=tbSongs, Path=ActualHeight}"
+                                   Background="White"/>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </TextBox.Resources>
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter Property="Background" Value="{StaticResource HelpBrush}"/>
+                        </Trigger>
+                        <Trigger Property="Text" Value="">
+                            <Setter Property="Background" Value="{StaticResource HelpBrush}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+            </TextBox>
+        <local:AutoCompleteTextBox Height="23" x:Name="tbArtist" Threshold="1" Margin="72,0,15,123" VerticalAlignment="Bottom" />
+        <Label Content="Book:" HorizontalAlignment="Left" Margin="13,0,0,82" Name="lblBook" Width="Auto" FocusVisualStyle="{x:Null}" Height="26" VerticalAlignment="Bottom" />
+        <local:AutoCompleteTextBox x:Name="tbBook" Threshold="1" Margin="72,0,15,83" Height="23" VerticalAlignment="Bottom" />
+        <Button Content="Save Entries" Margin="139,0,294,19" Name="btnSaveEntries" Click="btnSaveEntries_Click" Style="{StaticResource GlassButtonStyle}" Height="37" VerticalAlignment="Bottom" Width="Auto" MinWidth="98" MinHeight="37" MaxWidth="98" MaxHeight="37" />
+        <Button Content="Exit" Margin="303,0,130,19" Name="btnCancel" Click="btnExit_Click" Style="{StaticResource GlassButtonStyle}" Height="37" VerticalAlignment="Bottom" MinWidth="98" MinHeight="37" MaxWidth="98" MaxHeight="37" />
+    </Grid>
+</Window>

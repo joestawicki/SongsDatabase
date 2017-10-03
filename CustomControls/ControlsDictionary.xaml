@@ -1,0 +1,195 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    x:Class="PianoSongs.ControlsDictionary">
+    <Style x:Key="cbStyle" TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+    </Style>
+    <Style x:Key="GlassButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="MouseEnter">
+                            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="BaseRect">
+                                <EasingColorKeyFrame KeyTime="0:0:0.3" Value="MediumBlue"/>
+                            </ColorAnimationUsingKeyFrames>
+                            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Content" >
+                                <EasingColorKeyFrame KeyTime="0:0:0.3" Value="BlanchedAlmond"/>
+                            </ColorAnimationUsingKeyFrames>
+                        </Storyboard>
+                        <Storyboard x:Key="MouseLeave">
+                            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="BaseRect">
+                                <SplineColorKeyFrame KeyTime="0:0:0.2" Value="Navy"/>
+                            </ColorAnimationUsingKeyFrames>
+                            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Content" >
+                                <EasingColorKeyFrame KeyTime="0:0:0.2" Value="White"/>
+                            </ColorAnimationUsingKeyFrames>
+                        </Storyboard>
+                        <Storyboard x:Key="MouseDown">
+                            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="BaseRect">
+                                <EasingColorKeyFrame KeyTime="0" Value="MidnightBlue"/>
+                            </ColorAnimationUsingKeyFrames>
+                            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Content" >
+                                <EasingColorKeyFrame KeyTime="0" Value="Gainsboro"/>
+                            </ColorAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates"/>
+                            <VisualStateGroup x:Name="FocusStates"/>
+                        </VisualStateManager.VisualStateGroups>
+                        <Rectangle x:Name="BaseRect" Fill="Navy" RadiusY="0" RadiusX="0" Stroke="Black" Margin="0,1,0,-1" Opacity="0.8"/>
+                        <ContentPresenter x:Name="Content" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" TextBlock.Foreground="White" TextBlock.FontSize="{TemplateBinding FontSize}" TextBlock.FontWeight="Medium"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="Mouse.MouseLeave">
+                            <BeginStoryboard Storyboard="{StaticResource MouseLeave}"/>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.PreviewMouseDown">
+                            <BeginStoryboard Name="BeginMouseDownStoryboard" Storyboard="{StaticResource MouseDown}"/>
+                        </EventTrigger>
+                        
+                        <EventTrigger RoutedEvent="Button.PreviewMouseUp">
+                            <StopStoryboard BeginStoryboardName="BeginMouseDownStoryboard"/>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                            <BeginStoryboard Name="BeginMouseEnterStoryboard" Storyboard="{StaticResource MouseEnter}"/>
+                        </EventTrigger> 
+                        <Trigger Property="IsFocused" Value="True"/>
+                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True"/>
+                        <Trigger Property="IsPressed" Value="True"/>
+                        <Trigger Property="IsEnabled" Value="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="DataGridStyle"  TargetType="DataGrid">
+        <Setter Property="RowBackground" Value="#FFFFFF" />
+        <Setter Property="AlternatingRowBackground" Value="#EBEBED" />
+        <Setter Property="RowHeight" Value="18" />
+        <Setter Property="GridLinesVisibility" Value="All"/>
+        <Setter Property="HeadersVisibility" Value="Column" />
+        <Setter Property="HorizontalGridLinesBrush" Value="#A0A0A0" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="SelectionMode" Value="Single" />
+        <Setter Property="CanUserReorderColumns" Value="False" />
+        <Setter Property="CanUserResizeColumns" Value="True" />
+        <Setter Property="CanUserSortColumns" Value="True" />
+        <Setter Property="AutoGenerateColumns" Value="False" />
+        <Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected" />
+    </Style>
+    <Style TargetType="DataGridColumnHeader" 
+                   x:Key="DataGridHeaderGlassEffect" >
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DataGridColumnHeader">
+                    <Grid Name="Root">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Rectangle x:Name="BackgroundRectangle" Stretch="Fill" 
+                            Fill="#AA90EE90"  Grid.ColumnSpan="2" 
+                            Grid.RowSpan="2"  />
+                        <Border BorderBrush="Transparent" 
+                                BorderThickness="1,1,1,1" 
+                                Grid.ColumnSpan="3" Grid.RowSpan="3">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.5*"/>
+                                    <RowDefinition Height="0.5*"/>
+                                </Grid.RowDefinitions>
+                            </Grid>
+                        </Border>
+                        <ContentPresenter x:Name="HeaderText" 
+                          Grid.RowSpan="2" 
+                          Content="{TemplateBinding Content}" 
+                          Cursor="{TemplateBinding Cursor}" 
+                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                          Margin="{TemplateBinding Padding}"/>
+                        <Path Grid.RowSpan="2" Name="SortIcon" 
+                          RenderTransformOrigin=".5,.5" 
+                          HorizontalAlignment="Left" 
+                          VerticalAlignment="Center" Opacity="0" 
+                          Grid.Column="1" Stretch="Uniform" 
+                          Margin="5, 0, 0, 0" Fill="Black"
+                          Width="8" Data="F1 M -3,3 L 3,3 L 0,0 Z ">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform x:Name="SortIconTransform"  />
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                        <Thumb x:Name="PART_RightHeaderGripper" Grid.Column="1" HorizontalAlignment="Right"
+                            Width="4" BorderThickness="3" BorderBrush="Transparent" Background="Transparent" Foreground="Transparent" Cursor="SizeWE"/>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="SortStates" >
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="00:00:0.1" />
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Unsorted" />
+                                <VisualState x:Name="SortAscending">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="SortIcon" 
+                                           Storyboard.TargetProperty="Opacity" 
+                                           Duration="0" To="1.0" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="SortDescending">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="SortIcon" 
+                                          Storyboard.TargetProperty="Opacity" 
+                                          Duration="0" To="1.0" />
+                                        <DoubleAnimation 
+                                          Storyboard.TargetName="SortIconTransform" 
+                                          Storyboard.TargetProperty="ScaleY" 
+                                          Duration="0" To="-1" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimation
+                                          Storyboard.TargetName="BackgroundRectangle" 
+                                          Storyboard.TargetProperty="(Rectangle.Fill).Color" 
+                                          To="#1190EE90"
+                                          Duration="00:00:00.2">
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimation
+                                          Storyboard.TargetName="BackgroundRectangle" 
+                                          Storyboard.TargetProperty="(Rectangle.Fill).Color" 
+                                          To="#FF90EE90"
+                                          Duration="00:00:00.0">
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
