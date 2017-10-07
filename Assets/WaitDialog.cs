@@ -33,7 +33,9 @@ namespace PianoSongs
                     waitText = "Loading...";
                 else
                     waitText = message;
-                w = new WaitDlg();
+
+                if (w == null)
+                    w = new WaitDlg();
                 w.tbText.Text = waitText;
                 w.Show();
             }

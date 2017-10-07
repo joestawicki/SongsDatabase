@@ -87,12 +87,6 @@ namespace PianoSongs
             {
                 searchSongs();
             }
-            ComboBoxSongNameSearch.SelectedValue = prvtSongFilter;
-            ComboBoxArtistNameSearch.SelectedValue = prvtArtistFilter;
-            ComboBoxBookNameSearch.SelectedValue = prvtBookFilter;
-            TextBoxSongNameSearch.Text = prvtSongText;
-            TextBoxArtistNameSearch.Text = prvtArtistText;
-            TextBoxBookNameSearch.Text = prvtBookText;
         }
 
         private void ShowOptionsWindow()
@@ -280,48 +274,6 @@ namespace PianoSongs
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             context.Dispose();
-        }
-
-        private void expanderSearch_Expanded(object sender, RoutedEventArgs e)
-        {
-            this.Height = this.Height + expanderSearch.ActualHeight;
-        }
-
-        private void expanderSearch_Collapsed(object sender, RoutedEventArgs e)
-        {
-            this.Height = this.Height - expanderSearch.ActualHeight;
-        }
-
-        private void btnSearch_Click(object sender, RoutedEventArgs e)
-        {
-            if (ComboBoxSongNameSearch.SelectedValue != null)
-                prvtSongFilter = (int)ComboBoxSongNameSearch.SelectedValue;
-            if (ComboBoxArtistNameSearch.SelectedValue != null)
-                prvtArtistFilter = (int)ComboBoxArtistNameSearch.SelectedValue;
-            if (ComboBoxBookNameSearch.SelectedValue != null)
-                prvtBookFilter = (int)ComboBoxBookNameSearch.SelectedValue;
-
-            prvtSongText = TextBoxSongNameSearch.Text.Trim();
-            prvtArtistText = TextBoxArtistNameSearch.Text.Trim();
-            prvtBookText = TextBoxBookNameSearch.Text.Trim();
-            searchSongs();
-        }
-
-        private void btnClearSearch_Click(object sender, RoutedEventArgs e)
-        {
-            ComboBoxArtistNameSearch.SelectedIndex = -1;
-            ComboBoxBookNameSearch.SelectedIndex = -1;
-            ComboBoxSongNameSearch.SelectedIndex = -1;
-            TextBoxArtistNameSearch.Text = "";
-            TextBoxBookNameSearch.Text = "";
-            TextBoxSongNameSearch.Text = "";
-
-            prvtSongFilter = -1;
-            prvtArtistFilter = -1;
-            prvtBookFilter = -1;
-            prvtSongText = "";
-            prvtArtistText = "";
-            prvtBookText = "";
         }
     }
     

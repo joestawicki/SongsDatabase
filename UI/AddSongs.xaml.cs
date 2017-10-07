@@ -86,6 +86,7 @@ namespace PianoSongs
             }
             else
                 book = tbBook.Text;
+
             WaitDialog.Show("Saving songs, please wait...");
             for (int i = 0; i < tbSongs.LineCount; i++)
             {
